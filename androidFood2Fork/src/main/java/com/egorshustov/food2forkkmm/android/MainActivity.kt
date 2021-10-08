@@ -3,7 +3,6 @@ package com.egorshustov.food2forkkmm.android
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.activity.compose.setContent
 import com.egorshustov.food2forkkmm.android.presentation.navigation.Navigation
 
 class MainActivity : AppCompatActivity() {
