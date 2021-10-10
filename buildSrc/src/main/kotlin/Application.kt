@@ -1,4 +1,5 @@
 object Application {
+
     const val appId = "com.egorshustov.food2forkkmm.android"
     const val versionCode = 1
     const val versionName = "1.0"
