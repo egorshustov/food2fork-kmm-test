@@ -9,7 +9,7 @@ import com.egorshustov.food2forkkmm.android.util.TOKEN
 import com.egorshustov.food2forkkmm.datasource.network.KtorClientFactory
 import com.egorshustov.food2forkkmm.datasource.network.model.RecipeDto
 import com.egorshustov.food2forkkmm.datasource.network.toRecipe
-import com.egorshustov.food2forkkmm.domian.util.DateTimeUtil
+import com.egorshustov.food2forkkmm.domain.util.DateTimeUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.request.get
 import io.ktor.client.request.header

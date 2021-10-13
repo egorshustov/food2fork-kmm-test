@@ -1,4 +1,4 @@
-package com.egorshustov.food2forkkmm.domian.util
+package com.egorshustov.food2forkkmm.domain.util
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
