@@ -13,7 +13,7 @@ fun RecipeDto.toRecipe(): Recipe = Recipe(
     rating = rating ?: NO_VALUE,
     publisher = publisher.orEmpty(),
     sourceUrl = sourceUrl.orEmpty(),
-    ingredients = ingredients ?: emptyList(),
+    ingredients = ingredients.orEmpty(),
     dateAdded = DateTimeUtil.toLocalDate(longDateAdded?.toDouble() ?: NO_VALUE.toDouble()),
     dateUpdated = DateTimeUtil.toLocalDate(longDateUpdated?.toDouble() ?: NO_VALUE.toDouble())
 )
