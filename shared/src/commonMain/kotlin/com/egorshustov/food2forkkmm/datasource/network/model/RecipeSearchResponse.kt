@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 data class RecipeSearchResponse(
 
     @SerialName("count")
-    var count: Int? = null,
+    val count: Int? = null,
 
     @SerialName("results")
-    var results: List<RecipeDto>? = null
+    val results: List<RecipeDto>? = null
 )

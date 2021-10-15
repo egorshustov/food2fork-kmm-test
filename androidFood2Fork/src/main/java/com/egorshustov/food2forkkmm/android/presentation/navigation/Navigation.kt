@@ -23,7 +23,8 @@ fun Navigation() {
         composable(
             route = Screen.RecipeList.route
         ) { navBackStackEntry ->
-            val viewModel: RecipeListViewModel = viewModel()
+            val factory: ViewModelProvider.Factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+            val viewModel: RecipeListViewModel = viewModel(factory = factory)
             RecipeListScreen { recipeId ->
                 navController.navigate(Screen.RecipeDetail.route + "/$recipeId")
             }
