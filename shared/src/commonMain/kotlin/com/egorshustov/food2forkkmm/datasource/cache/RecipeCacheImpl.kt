@@ -40,8 +40,8 @@ class RecipeCacheImpl(
         offset = ((page - 1) * RECIPE_PAGINATION_PAGE_SIZE).toLong()
     ).executeAsList().toRecipeList()
 
-    override fun get(recipeid: Int): Recipe? = try {
-        queries.getRecipeById(id = recipeid.toLong()).executeAsOne().toRecipe()
+    override fun get(recipeId: Int): Recipe? = try {
+        queries.getRecipeById(id = recipeId.toLong()).executeAsOne().toRecipe()
     } catch (e: NullPointerException) {
         null
     }

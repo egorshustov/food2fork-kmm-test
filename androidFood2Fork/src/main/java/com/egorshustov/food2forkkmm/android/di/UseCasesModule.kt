@@ -1,5 +1,6 @@
 package com.egorshustov.food2forkkmm.android.di
 
+import com.egorshustov.food2forkkmm.datasource.cache.RecipeCache
 import com.egorshustov.food2forkkmm.datasource.network.RecipeService
 import com.egorshustov.food2forkkmm.usecases.GetRecipeUseCase
 import com.egorshustov.food2forkkmm.usecases.SearchRecipesUseCase
@@ -15,11 +16,15 @@ object UseCasesModule {
 
     @Singleton
     @Provides
-    fun provideSearchRecipesUseCase(recipeService: RecipeService): SearchRecipesUseCase =
-        SearchRecipesUseCase(recipeService)
+    fun provideSearchRecipesUseCase(
+        recipeService: RecipeService,
+        recipeCache: RecipeCache
+    ): SearchRecipesUseCase = SearchRecipesUseCase(recipeService, recipeCache)
 
     @Singleton
     @Provides
-    fun provideGetRecipeUseCase(recipeService: RecipeService): GetRecipeUseCase =
-        GetRecipeUseCase(recipeService)
+    fun provideGetRecipeUseCase(
+        recipeService: RecipeService,
+        recipeCache: RecipeCache
+    ): GetRecipeUseCase = GetRecipeUseCase(recipeService, recipeCache)
 }

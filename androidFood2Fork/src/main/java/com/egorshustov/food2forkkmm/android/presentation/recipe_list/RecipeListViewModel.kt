@@ -20,7 +20,7 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private fun loadRecipes() {
-        searchRecipesUseCase(page = 1, query = "chicken").onEach { result ->
+        searchRecipesUseCase(page = 1).onEach { result ->
             println("RecipeListVM: $result")
         }.launchIn(viewModelScope)
     }

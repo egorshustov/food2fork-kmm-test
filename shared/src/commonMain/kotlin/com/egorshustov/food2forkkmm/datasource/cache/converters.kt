@@ -19,8 +19,8 @@ fun List<Recipe_Entity>.toRecipeList(): List<Recipe> = map { it.toRecipe() }
 
 fun List<String>.toCommonString(): String {
     val stringBuilder = StringBuilder()
-    forEach { stringBuilder.append("$it,") }
+    forEach { stringBuilder.append("$it|") }
     return stringBuilder.toString()
 }
 
-fun String.toStringList(): List<String> = split(",")
+fun String.toStringList(): List<String> = split("|").filter { it.isNotBlank() }

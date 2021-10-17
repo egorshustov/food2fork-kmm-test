@@ -13,5 +13,5 @@ interface RecipeCache {
     fun getAll(page: Int): List<Recipe>
 
     @Throws(NullPointerException::class)
-    fun get(recipeid: Int): Recipe?
+    fun get(recipeId: Int): Recipe?
 }
