@@ -29,7 +29,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Compose.composeVersion
