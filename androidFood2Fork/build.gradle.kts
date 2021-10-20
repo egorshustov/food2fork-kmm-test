@@ -40,6 +40,8 @@ dependencies {
 
     implementation(AndroidX.appCompat)
 
+    implementation(Coil.coilCompose)
+
     implementation(Compose.runtime)
     implementation(Compose.runtimeLiveData)
     implementation(Compose.ui)
