@@ -26,7 +26,7 @@ fun RecipeImage(url: String, contentDescription: String) {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(RECIPE_IMAGE_HEIGHT.dp),
+                .height(RECIPE_IMAGE_HEIGHT.dp)
         )
     }
 
