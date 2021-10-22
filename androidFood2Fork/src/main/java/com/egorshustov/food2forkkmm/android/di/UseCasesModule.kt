@@ -2,8 +2,8 @@ package com.egorshustov.food2forkkmm.android.di
 
 import com.egorshustov.food2forkkmm.datasource.cache.RecipeCache
 import com.egorshustov.food2forkkmm.datasource.network.RecipeService
-import com.egorshustov.food2forkkmm.usecases.GetRecipeUseCase
-import com.egorshustov.food2forkkmm.usecases.SearchRecipesUseCase
+import com.egorshustov.food2forkkmm.usecases.recipe_detail.GetRecipeUseCase
+import com.egorshustov.food2forkkmm.usecases.recipe_list.SearchRecipesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

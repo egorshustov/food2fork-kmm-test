@@ -1,4 +1,4 @@
-package com.egorshustov.food2forkkmm.usecases
+package com.egorshustov.food2forkkmm.usecases.recipe_detail
 
 import com.egorshustov.food2forkkmm.datasource.cache.RecipeCache
 import com.egorshustov.food2forkkmm.datasource.network.RecipeService
@@ -9,18 +9,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class SearchRecipesUseCase(
+class GetRecipeUseCase(
     private val recipeService: RecipeService,
     private val recipeCache: RecipeCache
 ) {
 
-    operator fun invoke(page: Int, query: String = ""): Flow<Result<List<Recipe>>> = flow {
+    operator fun invoke(id: Int): Flow<Result<Recipe>> = flow {
         emit(Result.Loading)
 
         try {
-            val fetchedRecipes = recipeService.search(page, query)
-            emit(Result.Success(fetchedRecipes))
-            recipeCache.insert(fetchedRecipes)
+            val cachedRecipe = recipeCache.get(id)
+            if (cachedRecipe == null) {
+                val fetchedRecipe = recipeService.get(id)
+                emit(Result.Success(fetchedRecipe))
+                recipeCache.insert(fetchedRecipe)
+            } else {
+                emit(Result.Success(cachedRecipe))
+            }
         } catch (e: Exception) {
             emit(Result.Error(e))
         }

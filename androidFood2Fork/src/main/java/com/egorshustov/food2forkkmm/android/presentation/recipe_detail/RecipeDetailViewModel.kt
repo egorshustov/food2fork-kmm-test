@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.android.util.RECIPE_ID_ARG
 import com.egorshustov.food2forkkmm.domain.model.Recipe
 import com.egorshustov.food2forkkmm.domain.util.Result
-import com.egorshustov.food2forkkmm.usecases.GetRecipeUseCase
+import com.egorshustov.food2forkkmm.usecases.recipe_detail.GetRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn

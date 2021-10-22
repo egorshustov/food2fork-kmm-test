@@ -25,7 +25,7 @@ fun Navigation() {
         ) { navBackStackEntry ->
             val factory: ViewModelProvider.Factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel(factory = factory)
-            RecipeListScreen { recipeId ->
+            RecipeListScreen(state = viewModel.state.value) { recipeId ->
                 navController.navigate(Screen.RecipeDetail.route + "/$recipeId")
             }
         }
