@@ -10,7 +10,7 @@ fun RecipeListScreen(
     state: RecipeListState,
     onClickRecipeListItem: (Int) -> Unit
 ) {
-    AppTheme(displayProgressBar = false) {
+    AppTheme(displayProgressBar = state.isLoading) {
         RecipeList(
             isLoading = state.isLoading,
             recipes = state.recipes,
