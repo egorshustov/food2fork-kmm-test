@@ -19,12 +19,8 @@ fun RecipeListScreen(
             topBar = {
                 SearchAppBar(
                     query = state.query,
-                    onQueryChanged = {
-                        // TODO("Update state")
-                    },
-                    onExecuteSearch = {
-                        // TODO("Execute a new search")
-                    }
+                    onQueryChanged = { onTriggerEvent(RecipeListEvent.OnUpdateQuery(it)) },
+                    onExecuteSearch = { onTriggerEvent(RecipeListEvent.NewSearch) }
                 )
             }
         ) {
