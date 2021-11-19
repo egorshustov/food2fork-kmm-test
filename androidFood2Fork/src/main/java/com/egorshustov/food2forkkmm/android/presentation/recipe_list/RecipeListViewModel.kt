@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.domain.util.Result
+import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.egorshustov.food2forkkmm.presentation.recipe_list.RecipeListEvent
 import com.egorshustov.food2forkkmm.presentation.recipe_list.RecipeListState
 import com.egorshustov.food2forkkmm.usecases.recipe_list.SearchRecipesUseCase
@@ -31,7 +32,9 @@ class RecipeListViewModel @Inject constructor(
             RecipeListEvent.LoadRecipes -> loadRecipes()
             RecipeListEvent.NextPage -> nextPage()
             RecipeListEvent.NewSearch -> newSearch()
-            is RecipeListEvent.OnUpdateQuery -> state.value = state.value.copy(query = event.query)
+            is RecipeListEvent.OnUpdateQuery -> state.value =
+                state.value.copy(query = event.query, selectedCategory = null)
+            is RecipeListEvent.OnSelectCategory -> onSelectCategory(event.category)
             else -> handleError("Invalid Event")
         }
     }
@@ -62,6 +65,11 @@ class RecipeListViewModel @Inject constructor(
     private fun newSearch() = with(state.value) {
         state.value = copy(page = 1, recipes = emptyList())
         loadRecipes()
+    }
+
+    private fun onSelectCategory(category: FoodCategory) {
+        state.value = state.value.copy(selectedCategory = category, query = category.value)
+        newSearch()
     }
 
     private fun handleError(errorMessage: String) {

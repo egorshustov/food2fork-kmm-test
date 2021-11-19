@@ -25,12 +25,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategory
+import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategoryUtil
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchAppBar(
     query: String,
     categories: List<FoodCategory>,
+    selectedCategory: FoodCategory? = null,
+    onSelectedCategoryChanged: (FoodCategory) -> Unit,
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: () -> Unit,
 ) {
@@ -62,12 +65,14 @@ fun SearchAppBar(
                 )
             }
             LazyRow(modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp)) {
-                items(categories) {
+                items(categories) { itemCategory ->
                     FoodCategoryChip(
-                        foodCategory = it.value,
-                        isSelected = false,
-                        onSelectedCategoryChanged = {
-                            // todo
+                        foodCategory = itemCategory.value,
+                        isSelected = selectedCategory == itemCategory,
+                        onSelectedCategoryChanged = { value ->
+                            FoodCategoryUtil.getFoodCategory(value)?.let { newCategory ->
+                                onSelectedCategoryChanged(newCategory)
+                            }
                         }
                     )
                 }
