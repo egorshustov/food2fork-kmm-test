@@ -24,7 +24,6 @@ object DateTimeUtil {
     fun convertDateToString(date: LocalDateTime?): String? = date?.toString()
 
     // States: yesterday, today, tomorrow and everything else
-    @ExperimentalStdlibApi
     fun humanizeDatetime(date: LocalDateTime?): String {
         val sb = StringBuilder()
         date?.run {
