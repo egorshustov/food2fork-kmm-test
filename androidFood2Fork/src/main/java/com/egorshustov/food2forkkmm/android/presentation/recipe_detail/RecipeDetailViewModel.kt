@@ -6,8 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.android.util.RECIPE_ID_ARG
-import com.egorshustov.food2forkkmm.domain.model.Recipe
 import com.egorshustov.food2forkkmm.domain.util.Result
+import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailEvent
+import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailState
 import com.egorshustov.food2forkkmm.usecases.recipe_detail.GetRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,20 +21,37 @@ class RecipeDetailViewModel @Inject constructor(
     private val getRecipeUseCase: GetRecipeUseCase
 ) : ViewModel() {
 
-    val recipe: MutableState<Recipe?> = mutableStateOf(null)
+    val state: MutableState<RecipeDetailState> = mutableStateOf(RecipeDetailState())
 
     init {
         savedStateHandle.get<Int>(RECIPE_ID_ARG)?.let { recipeId ->
-            getRecipe(recipeId)
+            onTriggerEvent(RecipeDetailEvent.GetRecipe(recipeId))
         }
     }
 
-    private fun getRecipe(id: Int) {
+    fun onTriggerEvent(event: RecipeDetailEvent) {
+        when (event) {
+            is RecipeDetailEvent.GetRecipe -> getRecipe(event.recipeId)
+            else -> handleError("Invalid Event")
+        }
+    }
+
+    private fun getRecipe(id: Int) = with(state.value) {
         getRecipeUseCase(id).onEach { result ->
-            println("RecipeDetailVM: $result")
-            if (result is Result.Success) {
-                recipe.value = result.data
+            state.value = when (result) {
+                is Result.Success -> copy(recipe = result.data, isLoading = false)
+
+                is Result.Error -> {
+                    handleError(result.exception.message.orEmpty())
+                    copy(isLoading = false)
+                }
+
+                Result.Loading -> copy(isLoading = true)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun handleError(errorMessage: String) {
+        // todo handle errors
     }
 }
