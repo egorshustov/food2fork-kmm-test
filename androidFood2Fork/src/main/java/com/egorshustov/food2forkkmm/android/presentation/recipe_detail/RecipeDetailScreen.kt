@@ -6,6 +6,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.egorshustov.food2forkkmm.android.presentation.components.RECIPE_IMAGE_BOX_HEIGHT
+import com.egorshustov.food2forkkmm.android.presentation.recipe_detail.components.LoadingRecipeShimmer
 import com.egorshustov.food2forkkmm.android.presentation.recipe_detail.components.RecipeView
 import com.egorshustov.food2forkkmm.android.presentation.theme.AppTheme
 import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailEvent
@@ -19,7 +21,7 @@ fun RecipeDetailScreen(
     AppTheme(displayProgressBar = state.isLoading) {
         when {
             state.recipe == null && state.isLoading -> {
-                /*Loading*/
+                LoadingRecipeShimmer(imageHeight = RECIPE_IMAGE_BOX_HEIGHT.dp)
             }
 
             state.recipe == null && !state.isLoading -> {
