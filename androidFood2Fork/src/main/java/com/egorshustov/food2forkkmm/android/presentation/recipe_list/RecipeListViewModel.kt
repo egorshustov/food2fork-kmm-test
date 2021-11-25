@@ -73,6 +73,8 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private fun handleError(errorMessage: String) {
-        // todo handle errors
+        val queue = state.value.queue
+        queue.add(errorMessage)
+        state.value = state.value.copy(queue = queue)
     }
 }
