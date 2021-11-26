@@ -18,6 +18,7 @@ class SearchRecipesUseCase(
         emit(Result.Loading)
 
         try {
+            if (query == "error") throw Exception("Forcing an error... Search FAILED")
             val fetchedRecipes = recipeService.search(page, query)
             emit(Result.Success(fetchedRecipes))
             recipeCache.insert(fetchedRecipes)
