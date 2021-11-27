@@ -6,11 +6,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.domain.util.Result
+import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
+import com.egorshustov.food2forkkmm.presentation.model.UIComponentType
 import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.egorshustov.food2forkkmm.presentation.recipe_list.RecipeListEvent
 import com.egorshustov.food2forkkmm.presentation.recipe_list.RecipeListState
 import com.egorshustov.food2forkkmm.usecases.recipe_list.SearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,7 +38,13 @@ class RecipeListViewModel @Inject constructor(
             is RecipeListEvent.OnUpdateQuery -> state.value =
                 state.value.copy(query = event.query, selectedCategory = null)
             is RecipeListEvent.OnSelectCategory -> onSelectCategory(event.category)
-            else -> handleError("Invalid Event")
+            else -> appendToMessageQueue(
+                GenericMessageInfo.Builder()
+                    .id(UUID.randomUUID().toString())
+                    .title("Error")
+                    .uiComponentType(UIComponentType.Dialog)
+                    .description("Unknown Event")
+            )
         }
     }
 
@@ -48,7 +57,13 @@ class RecipeListViewModel @Inject constructor(
                 is Result.Success -> copy(recipes = recipes + result.data, isLoading = false)
 
                 is Result.Error -> {
-                    handleError(result.exception.message.orEmpty())
+                    appendToMessageQueue(
+                        GenericMessageInfo.Builder()
+                            .id("SearchRecipes.Error")
+                            .title("Error")
+                            .uiComponentType(UIComponentType.Dialog)
+                            .description(result.exception.message ?: "Unknown Error")
+                    )
                     copy(isLoading = false)
                 }
 
@@ -72,9 +87,9 @@ class RecipeListViewModel @Inject constructor(
         newSearch()
     }
 
-    private fun handleError(errorMessage: String) {
+    private fun appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {
         val queue = state.value.queue
-        queue.add(errorMessage)
+        queue.add(messageInfoBuilder.build())
         state.value = state.value.copy(queue = queue)
     }
 }
