@@ -1,4 +1,4 @@
-package com.egorshustov.food2forkkmm.domain.util
+package com.egorshustov.food2forkkmm.presentation.model
 
 /**
  * Kotlin version of a java.util Queue

@@ -11,6 +11,7 @@ import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.presentation.model.UIComponentType
 import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailEvent
 import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailState
+import com.egorshustov.food2forkkmm.presentation.util.GenericMessageInfoQueueUtil
 import com.egorshustov.food2forkkmm.usecases.recipe_detail.GetRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
@@ -68,7 +69,10 @@ class RecipeDetailViewModel @Inject constructor(
 
     private fun appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {
         val queue = state.value.queue
-        queue.add(messageInfoBuilder.build())
+        val messageInfo = messageInfoBuilder.build()
+        if (!GenericMessageInfoQueueUtil.doesMessageAlreadyExistInQueue(queue, messageInfo)) {
+            queue.add(messageInfo)
+        }
         state.value = state.value.copy(queue = queue)
     }
 }

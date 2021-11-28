@@ -2,7 +2,7 @@ package com.egorshustov.food2forkkmm.presentation.recipe_list
 
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.domain.model.Recipe
-import com.egorshustov.food2forkkmm.domain.util.Queue
+import com.egorshustov.food2forkkmm.presentation.model.Queue
 
 data class RecipeListState(
     val isLoading: Boolean = false,

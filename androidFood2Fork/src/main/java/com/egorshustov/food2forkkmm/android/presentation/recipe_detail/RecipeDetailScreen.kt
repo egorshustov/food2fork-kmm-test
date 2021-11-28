@@ -20,7 +20,7 @@ fun RecipeDetailScreen(
 ) {
     AppTheme(
         displayProgressBar = state.isLoading,
-        dialogQueue = state.queue
+        messageQueue = state.queue
     ) {
         when {
             state.recipe == null && state.isLoading -> {
