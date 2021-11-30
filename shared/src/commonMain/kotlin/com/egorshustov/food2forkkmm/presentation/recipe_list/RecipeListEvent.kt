@@ -11,4 +11,6 @@ sealed interface RecipeListEvent {
     data class OnUpdateQuery(val query: String) : RecipeListEvent
 
     data class OnSelectCategory(val category: FoodCategory) : RecipeListEvent
+
+    object OnRemoveHeadMessageFromQueue : RecipeListEvent
 }

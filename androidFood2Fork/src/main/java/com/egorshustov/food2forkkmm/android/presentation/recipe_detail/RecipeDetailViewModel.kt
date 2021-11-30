@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.android.util.RECIPE_ID_ARG
 import com.egorshustov.food2forkkmm.domain.util.Result
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
+import com.egorshustov.food2forkkmm.presentation.model.Queue
 import com.egorshustov.food2forkkmm.presentation.model.UIComponentType
 import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailEvent
 import com.egorshustov.food2forkkmm.presentation.recipe_detail.RecipeDetailState
@@ -36,6 +37,7 @@ class RecipeDetailViewModel @Inject constructor(
     fun onTriggerEvent(event: RecipeDetailEvent) {
         when (event) {
             is RecipeDetailEvent.GetRecipe -> getRecipe(event.recipeId)
+            RecipeDetailEvent.OnRemoveHeadMessageFromQueue -> removeHeadMessageFromQueue()
             else -> appendToMessageQueue(
                 GenericMessageInfo.Builder()
                     .id(UUID.randomUUID().toString())
@@ -65,6 +67,17 @@ class RecipeDetailViewModel @Inject constructor(
                 Result.Loading -> copy(isLoading = true)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun removeHeadMessageFromQueue() {
+        try {
+            val queue = state.value.queue
+            queue.remove()
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+            state.value = state.value.copy(queue = queue)
+        } catch (e: Exception) {
+            // nothing to remove, queue is empty
+        }
     }
 
     private fun appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {

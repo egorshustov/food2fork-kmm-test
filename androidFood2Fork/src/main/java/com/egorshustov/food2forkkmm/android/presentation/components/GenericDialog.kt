@@ -13,10 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GenericDialog(title: String, description: String? = null) {
+fun GenericDialog(
+    title: String,
+    description: String? = null,
+    onRemoveHeadMessageFromQueue: () -> Unit
+) {
     AlertDialog(
         onDismissRequest = {
-            /*TODO("remove message from queue)*/
+            onRemoveHeadMessageFromQueue()
         },
         text = {
             description?.let {
@@ -36,7 +40,7 @@ fun GenericDialog(title: String, description: String? = null) {
                 Button(
                     modifier = Modifier.padding(end = 8.dp),
                     onClick = {
-                        /*TODO("remove message from queue)*/
+                        onRemoveHeadMessageFromQueue()
                     }
                 ) {
                     Text(
@@ -47,7 +51,7 @@ fun GenericDialog(title: String, description: String? = null) {
                 Button(
                     modifier = Modifier.padding(end = 8.dp),
                     onClick = {
-                        /*TODO("remove message from queue)*/
+                        onRemoveHeadMessageFromQueue()
                     }
                 ) {
                     Text(

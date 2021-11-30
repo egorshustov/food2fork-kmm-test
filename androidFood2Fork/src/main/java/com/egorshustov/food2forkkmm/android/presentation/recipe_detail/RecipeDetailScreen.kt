@@ -20,7 +20,8 @@ fun RecipeDetailScreen(
 ) {
     AppTheme(
         displayProgressBar = state.isLoading,
-        messageQueue = state.queue
+        messageQueue = state.queue,
+        onRemoveHeadMessageFromQueue = { onTriggerEvent(RecipeDetailEvent.OnRemoveHeadMessageFromQueue) }
     ) {
         when {
             state.recipe == null && state.isLoading -> {

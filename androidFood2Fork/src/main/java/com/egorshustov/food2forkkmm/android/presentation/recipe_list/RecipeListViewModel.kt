@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.domain.util.Result
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
+import com.egorshustov.food2forkkmm.presentation.model.Queue
 import com.egorshustov.food2forkkmm.presentation.model.UIComponentType
 import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategory
 import com.egorshustov.food2forkkmm.presentation.recipe_list.RecipeListEvent
@@ -39,6 +40,7 @@ class RecipeListViewModel @Inject constructor(
             is RecipeListEvent.OnUpdateQuery -> state.value =
                 state.value.copy(query = event.query, selectedCategory = null)
             is RecipeListEvent.OnSelectCategory -> onSelectCategory(event.category)
+            RecipeListEvent.OnRemoveHeadMessageFromQueue -> removeHeadMessageFromQueue()
             else -> appendToMessageQueue(
                 GenericMessageInfo.Builder()
                     .id(UUID.randomUUID().toString())
@@ -86,6 +88,17 @@ class RecipeListViewModel @Inject constructor(
     private fun onSelectCategory(category: FoodCategory) {
         state.value = state.value.copy(selectedCategory = category, query = category.value)
         newSearch()
+    }
+
+    private fun removeHeadMessageFromQueue() {
+        try {
+            val queue = state.value.queue
+            queue.remove()
+            state.value = state.value.copy(queue = Queue(mutableListOf())) // force recompose
+            state.value = state.value.copy(queue = queue)
+        } catch (e: Exception) {
+            // nothing to remove, queue is empty
+        }
     }
 
     private fun appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {
