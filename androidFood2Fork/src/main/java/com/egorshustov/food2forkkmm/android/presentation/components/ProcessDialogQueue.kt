@@ -12,8 +12,11 @@ fun ProcessDialogQueue(
     dialogQueue?.peek()?.let { genericMessageInfo ->
         GenericDialog(
             title = genericMessageInfo.title,
+            onRemoveHeadMessageFromQueue = onRemoveHeadMessageFromQueue,
             description = genericMessageInfo.description,
-            onRemoveHeadMessageFromQueue = onRemoveHeadMessageFromQueue
+            positiveAction = genericMessageInfo.positiveAction,
+            negativeAction = genericMessageInfo.negativeAction,
+            onDismiss = genericMessageInfo.onDismiss
         )
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.domain.util.Result
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
+import com.egorshustov.food2forkkmm.presentation.model.PositiveAction
 import com.egorshustov.food2forkkmm.presentation.model.Queue
 import com.egorshustov.food2forkkmm.presentation.model.UIComponentType
 import com.egorshustov.food2forkkmm.presentation.recipe_list.FoodCategory
@@ -47,6 +48,7 @@ class RecipeListViewModel @Inject constructor(
                     .title("Error")
                     .uiComponentType(UIComponentType.Dialog)
                     .description("Unknown Event")
+                    .positive(PositiveAction("OK"))
             )
         }
     }
@@ -66,6 +68,7 @@ class RecipeListViewModel @Inject constructor(
                             .title("Error")
                             .uiComponentType(UIComponentType.Dialog)
                             .description(result.exception.message ?: "Unknown Error")
+                            .positive(PositiveAction("OK"))
                     )
                     copy(isLoading = false)
                 }
