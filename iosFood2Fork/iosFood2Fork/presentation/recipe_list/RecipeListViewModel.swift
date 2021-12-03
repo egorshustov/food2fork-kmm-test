@@ -27,6 +27,28 @@ class RecipeListViewModel: ObservableObject {
         // TODO: perform a search"
     }
     
+    func onTriggerEvent(event: RecipeListEvent) {
+        switch event {
+        case is RecipeListEvent.LoadRecipes:
+            doNothing()
+        case is RecipeListEvent.NextPage:
+            doNothing()
+        case is RecipeListEvent.NewSearch:
+            doNothing()
+        case is RecipeListEvent.OnUpdateQuery:
+            doNothing()
+        case is RecipeListEvent.OnSelectCategory:
+            doNothing()
+        case is RecipeListEvent.OnRemoveHeadMessageFromQueue:
+            doNothing()
+        default:
+            doNothing()
+        }
+    }
+        
+    func doNothing() {
+        // does nothing
+    }
     /**
      *  Not everything can be conveniently updated with this function.
      *  Things like recipes and selectedCategory must have their own functions.

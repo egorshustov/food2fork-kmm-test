@@ -1,8 +1,8 @@
 package com.egorshustov.food2forkkmm.presentation.recipe_detail
 
-sealed interface RecipeDetailEvent {
+sealed class RecipeDetailEvent { // KMM does not support Kotlin Sealed interfaces
 
-    data class GetRecipe(val recipeId: Int) : RecipeDetailEvent
+    data class GetRecipe(val recipeId: Int) : RecipeDetailEvent()
 
-    object OnRemoveHeadMessageFromQueue : RecipeDetailEvent
+    object OnRemoveHeadMessageFromQueue : RecipeDetailEvent()
 }
