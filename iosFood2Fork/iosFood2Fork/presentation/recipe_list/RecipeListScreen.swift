@@ -15,6 +15,8 @@ struct RecipeListScreen: View {
     private let cacheModule: CacheModule
     private let searchRecipesUseCaseModule: SearchRecipesUseCaseModule
     
+    @ObservedObject var viewModel: RecipeListViewModel
+    
     init (
         networkModule: NetworkModule,
         cacheModule: CacheModule
@@ -24,6 +26,9 @@ struct RecipeListScreen: View {
         self.searchRecipesUseCaseModule = SearchRecipesUseCaseModule(
             networkModule: self.networkModule,
             cacheModule: self.cacheModule
+        )
+        self.viewModel = RecipeListViewModel(
+            searchRecipesUseCase: searchRecipesUseCaseModule.searchRecipesUseCase, foodCategoryUtil: FoodCategoryUtil()
         )
     }
     

@@ -1,7 +1,7 @@
 package com.egorshustov.food2forkkmm.presentation.recipe_list
 
-import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.domain.model.Recipe
+import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.presentation.model.Queue
 
 data class RecipeListState(
@@ -11,4 +11,14 @@ data class RecipeListState(
     val selectedCategory: FoodCategory? = null,
     val recipes: List<Recipe> = listOf(),
     val queue: Queue<GenericMessageInfo> = Queue(mutableListOf())
-)
+) {
+
+    constructor() : this(
+        isLoading = false,
+        page = 1,
+        query = "",
+        selectedCategory = null,
+        recipes = listOf(),
+        queue = Queue(mutableListOf())
+    )
+}
