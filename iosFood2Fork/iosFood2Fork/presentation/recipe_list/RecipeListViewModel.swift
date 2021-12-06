@@ -46,7 +46,7 @@ class RecipeListViewModel: ObservableObject {
     }
     
     private func loadRecipes() {
-        let currentState: RecipeListState = self.state.copy() as! RecipeListState
+        let currentState = self.state.copy() as! RecipeListState
         searchRecipesUseCase.invoke(
             page: currentState.page,
             query: currentState.query
@@ -85,10 +85,17 @@ class RecipeListViewModel: ObservableObject {
     }
     
     private func appendRecipes(recipes: [Recipe]) {
-        for recipe in recipes {
-            print("\(recipe.title)")
-        }
-        // TODO: append recipes to state
+        let currentState = self.state.copy() as! RecipeListState
+        var currentRecipes = currentState.recipes
+        currentRecipes.append(contentsOf: recipes)
+        self.state = self.state.doCopy(
+            isLoading: currentState.isLoading,
+            page: currentState.page,
+            query: currentState.query,
+            selectedCategory: currentState.selectedCategory,
+            recipes: currentRecipes,
+            queue: currentState.queue
+        )
     }
     
     /**
@@ -103,7 +110,7 @@ class RecipeListViewModel: ObservableObject {
         query: String? = nil,
         queue: Queue<GenericMessageInfo>? = nil
     ) {
-        let currentState: RecipeListState = self.state.copy() as! RecipeListState
+        let currentState = self.state.copy() as! RecipeListState
         self.state = self.state.doCopy(
             isLoading: isLoading ?? currentState.isLoading,
             page: Int32(page ?? Int(currentState.page)),
