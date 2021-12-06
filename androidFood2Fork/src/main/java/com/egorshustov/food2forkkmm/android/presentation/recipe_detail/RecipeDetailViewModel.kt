@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.egorshustov.food2forkkmm.android.util.RECIPE_ID_ARG
+import com.egorshustov.food2forkkmm.domain.model.Recipe
 import com.egorshustov.food2forkkmm.domain.util.Result
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.presentation.model.PositiveAction
@@ -18,8 +19,6 @@ import com.egorshustov.food2forkkmm.usecases.recipe_detail.GetRecipeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 class RecipeDetailViewModel @Inject constructor(
@@ -51,9 +50,9 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     private fun getRecipe(id: Int) = with(state.value) {
-        getRecipeUseCase(id).onEach { result ->
+        getRecipeUseCase(id).collectCommon(viewModelScope) { result: Result ->
             state.value = when (result) {
-                is Result.Success -> copy(recipe = result.data, isLoading = false)
+                is Result.Success<*> -> copy(recipe = result.data as? Recipe, isLoading = false)
 
                 is Result.Error -> {
                     appendToMessageQueue(
@@ -69,7 +68,7 @@ class RecipeDetailViewModel @Inject constructor(
 
                 Result.Loading -> copy(isLoading = true)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun removeHeadMessageFromQueue() {

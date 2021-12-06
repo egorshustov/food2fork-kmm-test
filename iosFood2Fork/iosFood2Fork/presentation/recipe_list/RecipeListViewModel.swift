@@ -17,38 +17,80 @@ class RecipeListViewModel: ObservableObject {
     
     @Published var state: RecipeListState = RecipeListState()
     
-    
     init(
         searchRecipesUseCase: SearchRecipesUseCase,
         foodCategoryUtil: FoodCategoryUtil
     ) {
         self.searchRecipesUseCase = searchRecipesUseCase
         self.foodCategoryUtil = foodCategoryUtil
-        // TODO: perform a search"
+        onTriggerEvent(event: RecipeListEvent.LoadRecipes())
     }
     
     func onTriggerEvent(event: RecipeListEvent) {
         switch event {
-        case is RecipeListEvent.LoadRecipes:
-            doNothing()
-        case is RecipeListEvent.NextPage:
-            doNothing()
-        case is RecipeListEvent.NewSearch:
-            doNothing()
-        case is RecipeListEvent.OnUpdateQuery:
-            doNothing()
-        case is RecipeListEvent.OnSelectCategory:
-            doNothing()
-        case is RecipeListEvent.OnRemoveHeadMessageFromQueue:
-            doNothing()
-        default:
-            doNothing()
+            case is RecipeListEvent.LoadRecipes:
+                loadRecipes()
+            case is RecipeListEvent.NextPage:
+                doNothing()
+            case is RecipeListEvent.NewSearch:
+                doNothing()
+            case is RecipeListEvent.OnUpdateQuery:
+                doNothing()
+            case is RecipeListEvent.OnSelectCategory:
+                doNothing()
+            case is RecipeListEvent.OnRemoveHeadMessageFromQueue:
+                doNothing()
+            default:
+                doNothing()
         }
     }
+    
+    private func loadRecipes() {
+        let currentState: RecipeListState = self.state.copy() as! RecipeListState
+        searchRecipesUseCase.invoke(
+            page: currentState.page,
+            query: currentState.query
+        ).collectCommon(
+            coroutineScope: nil,
+            callback: { result in
+                switch result {
+                    case is ResultSuccess<AnyObject>: do {
+                        let resultSuccess = result as! ResultSuccess<AnyObject>
+                        let recipeList = resultSuccess.data as! [Recipe]
+                        if !recipeList.isEmpty {
+                            self.appendRecipes(recipes: recipeList)
+                        }
+                        self.updateState(isLoading: false)
+                    }
+                    case is Result.Error: do {
+                        let resultError = result as! Result.Error
+                        let exception = resultError.exception
+                        print(exception)
+                        self.updateState(isLoading: false)
+                    }
+                    case is Result.Loading: do {
+                        print("Loading")
+                        self.updateState(isLoading: true)
+                    }
+                    default: do {
+                        print("default")
+                    }
+                }
+            }
+        )
+    }
         
-    func doNothing() {
+    private func doNothing() {
         // does nothing
     }
+    
+    private func appendRecipes(recipes: [Recipe]) {
+        for recipe in recipes {
+            print("\(recipe.title)")
+        }
+        // TODO: append recipes to state
+    }
+    
     /**
      *  Not everything can be conveniently updated with this function.
      *  Things like recipes and selectedCategory must have their own functions.

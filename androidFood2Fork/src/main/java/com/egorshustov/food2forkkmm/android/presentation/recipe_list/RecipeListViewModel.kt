@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.egorshustov.food2forkkmm.domain.model.Recipe
 import com.egorshustov.food2forkkmm.domain.util.Result
 import com.egorshustov.food2forkkmm.presentation.model.GenericMessageInfo
 import com.egorshustov.food2forkkmm.presentation.model.PositiveAction
@@ -18,8 +19,6 @@ import com.egorshustov.food2forkkmm.usecases.recipe_list.SearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
@@ -57,9 +56,12 @@ class RecipeListViewModel @Inject constructor(
         searchRecipesUseCase(
             page = page,
             query = query
-        ).onEach { result ->
+        ).collectCommon(viewModelScope) { result: Result ->
             state.value = when (result) {
-                is Result.Success -> copy(recipes = recipes + result.data, isLoading = false)
+                is Result.Success<*> -> copy(
+                    recipes = recipes + (result.data as? List<Recipe>).orEmpty(),
+                    isLoading = false
+                )
 
                 is Result.Error -> {
                     appendToMessageQueue(
@@ -75,7 +77,7 @@ class RecipeListViewModel @Inject constructor(
 
                 Result.Loading -> copy(isLoading = true)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun nextPage() = with(state.value) {
