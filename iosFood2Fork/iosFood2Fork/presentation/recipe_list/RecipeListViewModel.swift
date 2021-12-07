@@ -31,7 +31,7 @@ class RecipeListViewModel: ObservableObject {
             case is RecipeListEvent.LoadRecipes:
                 loadRecipes()
             case is RecipeListEvent.NextPage:
-                doNothing()
+                nextPage()
             case is RecipeListEvent.NewSearch:
                 doNothing()
             case is RecipeListEvent.OnUpdateQuery:
@@ -79,13 +79,19 @@ class RecipeListViewModel: ObservableObject {
             }
         )
     }
+    
+    private func nextPage() {
+        let currentState = self.state.copy() as! RecipeListState
+        updateState(page: Int(currentState.page) + 1)
+        loadRecipes()
+    }
         
     private func doNothing() {
         // does nothing
     }
     
     private func appendRecipes(recipes: [Recipe]) {
-        let currentState = self.state.copy() as! RecipeListState
+        var currentState = self.state.copy() as! RecipeListState
         var currentRecipes = currentState.recipes
         currentRecipes.append(contentsOf: recipes)
         self.state = self.state.doCopy(
@@ -94,8 +100,28 @@ class RecipeListViewModel: ObservableObject {
             query: currentState.query,
             selectedCategory: currentState.selectedCategory,
             recipes: currentRecipes,
+            bottomRecipe: currentState.bottomRecipe,
             queue: currentState.queue
         )
+        currentState = self.state.copy() as! RecipeListState
+        updateState(bottomRecipe: currentState.recipes[currentState.recipes.count - 1])
+    }
+    
+    func shouldQueryNextPage(recipe: Recipe) -> Bool {
+        // check if looking at the bottom recipe
+        // if lookingAtBottom -> proceed
+        // if PAGE_SIZE * page <= recipes.length
+        // if !queryInProgress
+        // else -> do nothing
+        let currentState = self.state.copy() as! RecipeListState
+        if (recipe.id == currentState.bottomRecipe?.id) {
+            if (RecipeListState.Companion().RECIPE_PAGINATION_PAGE_SIZE * currentState.page <= currentState.recipes.count) {
+                if (!currentState.isLoading) {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     /**
@@ -108,6 +134,7 @@ class RecipeListViewModel: ObservableObject {
         isLoading: Bool? = nil,
         page: Int? = nil,
         query: String? = nil,
+        bottomRecipe: Recipe? = nil,
         queue: Queue<GenericMessageInfo>? = nil
     ) {
         let currentState = self.state.copy() as! RecipeListState
@@ -117,6 +144,7 @@ class RecipeListViewModel: ObservableObject {
             query: query ?? currentState.query,
             selectedCategory: currentState.selectedCategory,
             recipes: currentState.recipes,
+            bottomRecipe: bottomRecipe ?? currentState.bottomRecipe,
             queue: queue ?? currentState.queue)
     }
 }
