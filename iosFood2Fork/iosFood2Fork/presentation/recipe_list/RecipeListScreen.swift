@@ -37,7 +37,10 @@ struct RecipeListScreen: View {
             HStack {
                 Text("Page: \(viewModel.state.page), Size: \(viewModel.state.recipes.count)").padding()
             }
-            SearchAppBar()
+            SearchAppBar(
+                query: viewModel.state.query,
+                onTriggerEvent: viewModel.onTriggerEvent
+            )
             List {
                 ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
                     Text(recipe.title)
