@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		74B2F3352763E1FF001F8FFC /* FoodCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */; };
 		74D2681C2761F1A200E161FD /* SearchAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2681B2761F1A200E161FD /* SearchAppBar.swift */; };
 		74EFD83E2758A9E60057E874 /* RecipeListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EFD83D2758A9E60057E874 /* RecipeListScreen.swift */; };
 		74EFD8402759B5AF0057E874 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EFD83F2759B5AF0057E874 /* RecipeListViewModel.swift */; };
@@ -17,6 +18,7 @@
 /* Begin PBXFileReference section */
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		73B4FDAE0F4EE87D468C8925 /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
+		74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryChip.swift; sourceTree = "<group>"; };
 		74D2681B2761F1A200E161FD /* SearchAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppBar.swift; sourceTree = "<group>"; };
 		74EFD83D2758A9E60057E874 /* RecipeListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListScreen.swift; sourceTree = "<group>"; };
 		74EFD83F2759B5AF0057E874 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				74D2681B2761F1A200E161FD /* SearchAppBar.swift */,
+				74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				74EFD83E2758A9E60057E874 /* RecipeListScreen.swift in Sources */,
 				74D2681C2761F1A200E161FD /* SearchAppBar.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				74B2F3352763E1FF001F8FFC /* FoodCategoryChip.swift in Sources */,
 				74EFD8402759B5AF0057E874 /* RecipeListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
