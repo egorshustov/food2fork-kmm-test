@@ -37,11 +37,9 @@ struct RecipeListScreen: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Page: \(viewModel.state.page), Size: \(viewModel.state.recipes.count)").padding()
-            }
             SearchAppBar(
                 query: viewModel.state.query,
+                selectedCategory: viewModel.state.selectedCategory,
                 foodCategories: foodCategories,
                 onTriggerEvent: viewModel.onTriggerEvent
             )

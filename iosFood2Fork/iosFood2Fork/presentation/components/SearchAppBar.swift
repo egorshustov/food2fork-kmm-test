@@ -12,15 +12,18 @@ import shared
 struct SearchAppBar: View {
     
     @State var query: String = ""
+    private let selectedCategory: FoodCategory?
     private let foodCategories: [FoodCategory]
     private let onTriggerEvent: (RecipeListEvent) -> Void
     
     init(
         query: String,
+        selectedCategory: FoodCategory?,
         foodCategories: [FoodCategory],
         onTriggerEvent: @escaping (RecipeListEvent) -> Void
     ) {
         self.onTriggerEvent = onTriggerEvent
+        self.selectedCategory = selectedCategory
         self.foodCategories = foodCategories
         self._query = State(initialValue: query)
     }
@@ -44,10 +47,10 @@ struct SearchAppBar: View {
                     ForEach(foodCategories, id: \.self) { foodCategory in
                         FoodCategoryChip(
                             category: foodCategory.value,
-                            isSelected: false
+                            isSelected: selectedCategory == foodCategory
                         ).onTapGesture {
                             query = foodCategory.value
-                            // TODO: update query
+                            onTriggerEvent(RecipeListEvent.OnSelectCategory(category: foodCategory))
                         }
                     }
                 }
