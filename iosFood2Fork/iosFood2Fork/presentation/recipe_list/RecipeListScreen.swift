@@ -14,6 +14,7 @@ struct RecipeListScreen: View {
     private let networkModule: NetworkModule
     private let cacheModule: CacheModule
     private let searchRecipesUseCaseModule: SearchRecipesUseCaseModule
+    private let foodCategories: [FoodCategory]
     
     @ObservedObject var viewModel: RecipeListViewModel
     
@@ -27,9 +28,11 @@ struct RecipeListScreen: View {
             networkModule: self.networkModule,
             cacheModule: self.cacheModule
         )
+        let foodCategoryUtil = FoodCategoryUtil()
         self.viewModel = RecipeListViewModel(
-            searchRecipesUseCase: searchRecipesUseCaseModule.searchRecipesUseCase, foodCategoryUtil: FoodCategoryUtil()
+            searchRecipesUseCase: searchRecipesUseCaseModule.searchRecipesUseCase, foodCategoryUtil: foodCategoryUtil
         )
+        self.foodCategories = foodCategoryUtil.getAllFoodCategories()
     }
     
     var body: some View {
@@ -39,6 +42,7 @@ struct RecipeListScreen: View {
             }
             SearchAppBar(
                 query: viewModel.state.query,
+                foodCategories: foodCategories,
                 onTriggerEvent: viewModel.onTriggerEvent
             )
             List {

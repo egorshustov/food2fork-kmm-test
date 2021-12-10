@@ -12,13 +12,16 @@ import shared
 struct SearchAppBar: View {
     
     @State var query: String = ""
+    private let foodCategories: [FoodCategory]
     private let onTriggerEvent: (RecipeListEvent) -> Void
     
     init(
         query: String,
+        foodCategories: [FoodCategory],
         onTriggerEvent: @escaping (RecipeListEvent) -> Void
     ) {
         self.onTriggerEvent = onTriggerEvent
+        self.foodCategories = foodCategories
         self._query = State(initialValue: query)
     }
     
@@ -36,6 +39,19 @@ struct SearchAppBar: View {
                     onTriggerEvent(RecipeListEvent.OnUpdateQuery(query: newValue))
                 })
             }.padding(.bottom, 8)
+            ScrollView(.horizontal) {
+                HStack(spacing: 10) {
+                    ForEach(foodCategories, id: \.self) { foodCategory in
+                        FoodCategoryChip(
+                            category: foodCategory.value,
+                            isSelected: false
+                        ).onTapGesture {
+                            query = foodCategory.value
+                            // TODO: update query
+                        }
+                    }
+                }
+            }
         }.padding(.top, 8)
             .padding(.leading, 8)
             .padding(.trailing, 8)
