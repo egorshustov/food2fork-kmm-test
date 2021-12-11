@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		7429D2CE2764F0FA00769A7F /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429D2CD2764F0FA00769A7F /* RecipeCard.swift */; };
 		74B2F3352763E1FF001F8FFC /* FoodCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */; };
 		74D2681C2761F1A200E161FD /* SearchAppBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D2681B2761F1A200E161FD /* SearchAppBar.swift */; };
 		74EFD83E2758A9E60057E874 /* RecipeListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EFD83D2758A9E60057E874 /* RecipeListScreen.swift */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		73B4FDAE0F4EE87D468C8925 /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
+		7429D2CD2764F0FA00769A7F /* RecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
 		74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryChip.swift; sourceTree = "<group>"; };
 		74D2681B2761F1A200E161FD /* SearchAppBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppBar.swift; sourceTree = "<group>"; };
 		74EFD83D2758A9E60057E874 /* RecipeListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListScreen.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 			children = (
 				74D2681B2761F1A200E161FD /* SearchAppBar.swift */,
 				74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */,
+				7429D2CD2764F0FA00769A7F /* RecipeCard.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -123,6 +126,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				A60752DE7E02B784BC4D0438 /* Frameworks */,
+				E633587F83BDC9C86CD35F3E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,6 +203,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E633587F83BDC9C86CD35F3E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -211,6 +232,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				74B2F3352763E1FF001F8FFC /* FoodCategoryChip.swift in Sources */,
 				74EFD8402759B5AF0057E874 /* RecipeListViewModel.swift in Sources */,
+				7429D2CE2764F0FA00769A7F /* RecipeCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

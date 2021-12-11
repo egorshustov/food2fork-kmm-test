@@ -45,12 +45,14 @@ struct RecipeListScreen: View {
             )
             List {
                 ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
-                    Text(recipe.title)
+                    RecipeCard(recipe: recipe)
                         .onAppear {
                             if viewModel.shouldQueryNextPage(recipe: recipe) {
                                 viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
                             }
                         }
+                        .listRowInsets(EdgeInsets())
+                        .padding(.top, 10)
                 }
             }
         }
