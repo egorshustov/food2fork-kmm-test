@@ -37,37 +37,43 @@ struct RecipeListScreen: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                SearchAppBar(
-                    query: viewModel.state.query,
-                    selectedCategory: viewModel.state.selectedCategory,
-                    foodCategories: foodCategories,
-                    onTriggerEvent: viewModel.onTriggerEvent
-                )
-                List {
-                    ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
-                        ZStack {
-                            RecipeCard(recipe: recipe)
-                                .onAppear {
-                                    if viewModel.shouldQueryNextPage(recipe: recipe) {
-                                        viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
+            ZStack {
+                VStack {
+                    SearchAppBar(
+                        query: viewModel.state.query,
+                        selectedCategory: viewModel.state.selectedCategory,
+                        foodCategories: foodCategories,
+                        onTriggerEvent: viewModel.onTriggerEvent
+                    )
+                    List {
+                        ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
+                            ZStack {
+                                RecipeCard(recipe: recipe)
+                                    .onAppear {
+                                        if viewModel.shouldQueryNextPage(recipe: recipe) {
+                                            viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
+                                        }
                                     }
+                                NavigationLink {
+                                    Text("\(recipe.title)")
+                                } label: {
+                                    // workaround for hiding the arrows
+                                    EmptyView()
                                 }
-                            NavigationLink {
-                                Text("\(recipe.title)")
-                            } label: {
-                                // workaround for hiding the arrows
-                                EmptyView()
                             }
+                            .listRowInsets(EdgeInsets())
+                            .padding(.top, 10)
                         }
-                        .listRowInsets(EdgeInsets())
-                        .padding(.top, 10)
                     }
+                    .listStyle(PlainListStyle())
                 }
-                .listStyle(PlainListStyle())
+                .navigationBarTitle("Return to main screen")
+                .navigationBarHidden(true)
+                
+                if viewModel.state.isLoading {
+                    ProgressView("Searching recipes...")
+                }
             }
-            .navigationBarTitle("Return to main screen")
-            .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .padding()
