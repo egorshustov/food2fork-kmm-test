@@ -36,25 +36,36 @@ struct RecipeListScreen: View {
     }
     
     var body: some View {
-        VStack {
-            SearchAppBar(
-                query: viewModel.state.query,
-                selectedCategory: viewModel.state.selectedCategory,
-                foodCategories: foodCategories,
-                onTriggerEvent: viewModel.onTriggerEvent
-            )
-            List {
-                ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
-                    RecipeCard(recipe: recipe)
-                        .onAppear {
-                            if viewModel.shouldQueryNextPage(recipe: recipe) {
-                                viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
-                            }
+        NavigationView {
+            VStack {
+                SearchAppBar(
+                    query: viewModel.state.query,
+                    selectedCategory: viewModel.state.selectedCategory,
+                    foodCategories: foodCategories,
+                    onTriggerEvent: viewModel.onTriggerEvent
+                )
+                List {
+                    ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
+                        NavigationLink {
+                            Text("\(recipe.title)")
+                        } label: {
+                            RecipeCard(recipe: recipe)
+                                .onAppear {
+                                    if viewModel.shouldQueryNextPage(recipe: recipe) {
+                                        viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
+                                    }
+                                }
                         }
                         .listRowInsets(EdgeInsets())
                         .padding(.top, 10)
+                    }
                 }
+                .listStyle(PlainListStyle())
             }
+            .navigationBarTitle("Return to main screen")
+            .navigationBarHidden(true)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .padding()
     }
 }
