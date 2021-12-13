@@ -46,15 +46,19 @@ struct RecipeListScreen: View {
                 )
                 List {
                     ForEach(viewModel.state.recipes, id: \.self.id) { recipe in
-                        NavigationLink {
-                            Text("\(recipe.title)")
-                        } label: {
+                        ZStack {
                             RecipeCard(recipe: recipe)
                                 .onAppear {
                                     if viewModel.shouldQueryNextPage(recipe: recipe) {
                                         viewModel.onTriggerEvent(event: RecipeListEvent.NextPage())
                                     }
                                 }
+                            NavigationLink {
+                                Text("\(recipe.title)")
+                            } label: {
+                                // workaround for hiding the arrows
+                                EmptyView()
+                            }
                         }
                         .listRowInsets(EdgeInsets())
                         .padding(.top, 10)
