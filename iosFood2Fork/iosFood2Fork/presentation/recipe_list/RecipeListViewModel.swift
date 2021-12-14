@@ -12,8 +12,8 @@ import shared
 class RecipeListViewModel: ObservableObject {
     
     // Dependencies
-    let searchRecipesUseCase: SearchRecipesUseCase
-    let foodCategoryUtil: FoodCategoryUtil
+    private let searchRecipesUseCase: SearchRecipesUseCase
+    private let foodCategoryUtil: FoodCategoryUtil
     
     @Published var state: RecipeListState = RecipeListState()
     

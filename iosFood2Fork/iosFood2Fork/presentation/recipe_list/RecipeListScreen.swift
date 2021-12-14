@@ -55,7 +55,11 @@ struct RecipeListScreen: View {
                                         }
                                     }
                                 NavigationLink {
-                                    Text("\(recipe.title)")
+                                    RecipeDetailScreen(
+                                        recipeId: Int(recipe.id),
+                                        networkModule: self.networkModule,
+                                        cacheModule: self.cacheModule
+                                    )
                                 } label: {
                                     // workaround for hiding the arrows
                                     EmptyView()
