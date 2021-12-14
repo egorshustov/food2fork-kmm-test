@@ -38,6 +38,10 @@ struct RecipeDetailScreen: View {
     }
     
     var body: some View {
-        Text("ID: \(recipeId)")
+        if viewModel.state.recipe != nil {
+            Text("\(viewModel.state.recipe!.title)")
+        } else {
+            Text("Unable to retrieve the recipe details.")
+        }
     }
 }
