@@ -39,7 +39,7 @@ struct RecipeDetailScreen: View {
     
     var body: some View {
         if viewModel.state.recipe != nil {
-            Text("\(viewModel.state.recipe!.title)")
+            RecipeView(recipe: viewModel.state.recipe!, dateTimeUtil: datetimeUtil)
         } else {
             Text("Unable to retrieve the recipe details.")
         }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7429D2CE2764F0FA00769A7F /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429D2CD2764F0FA00769A7F /* RecipeCard.swift */; };
+		743BDD0027692F0500DFC2FB /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743BDCFF27692F0500DFC2FB /* RecipeView.swift */; };
 		747DF2A027680A7400C79ABF /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747DF29F27680A7400C79ABF /* RecipeDetailViewModel.swift */; };
 		747DF2A22768107200C79ABF /* RecipeDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747DF2A12768107200C79ABF /* RecipeDetailScreen.swift */; };
 		74B2F3352763E1FF001F8FFC /* FoodCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */; };
@@ -22,6 +23,7 @@
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		73B4FDAE0F4EE87D468C8925 /* Pods-iosFood2Fork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosFood2Fork.debug.xcconfig"; path = "Target Support Files/Pods-iosFood2Fork/Pods-iosFood2Fork.debug.xcconfig"; sourceTree = "<group>"; };
 		7429D2CD2764F0FA00769A7F /* RecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
+		743BDCFF27692F0500DFC2FB /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		747DF29F27680A7400C79ABF /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		747DF2A12768107200C79ABF /* RecipeDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailScreen.swift; sourceTree = "<group>"; };
 		74B2F3342763E1FF001F8FFC /* FoodCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategoryChip.swift; sourceTree = "<group>"; };
@@ -46,9 +48,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		743BDCFE27692E8300DFC2FB /* components */ = {
+			isa = PBXGroup;
+			children = (
+				743BDCFF27692F0500DFC2FB /* RecipeView.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		747DF29E27680A3A00C79ABF /* recipe_detail */ = {
 			isa = PBXGroup;
 			children = (
+				743BDCFE27692E8300DFC2FB /* components */,
 				747DF29F27680A7400C79ABF /* RecipeDetailViewModel.swift */,
 				747DF2A12768107200C79ABF /* RecipeDetailScreen.swift */,
 			);
@@ -241,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				743BDD0027692F0500DFC2FB /* RecipeView.swift in Sources */,
 				74EFD83E2758A9E60057E874 /* RecipeListScreen.swift in Sources */,
 				747DF2A027680A7400C79ABF /* RecipeDetailViewModel.swift in Sources */,
 				74D2681C2761F1A200E161FD /* SearchAppBar.swift in Sources */,
