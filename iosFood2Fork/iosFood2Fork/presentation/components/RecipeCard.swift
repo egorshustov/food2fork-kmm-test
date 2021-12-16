@@ -34,7 +34,7 @@ struct RecipeCard: View {
             
             HStack(alignment: .lastTextBaseline) {
                 Text(recipe.title)
-                    .font(.body)
+                    .font(Font.custom("Avenir", size: 16))
                     .frame(alignment: .center)
                 
                 Spacer()
