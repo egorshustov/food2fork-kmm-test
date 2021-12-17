@@ -33,13 +33,12 @@ struct RecipeCard: View {
                 .clipped() // 4
             
             HStack(alignment: .lastTextBaseline) {
-                Text(recipe.title)
-                    .font(Font.custom("Avenir", size: 16))
+                DefaultText(recipe.title, size: 19)
                     .frame(alignment: .center)
                 
                 Spacer()
                 
-                Text(String(recipe.rating))
+                DefaultText(String(recipe.rating))
                     .frame(alignment: .trailing)
             }
             .padding(.top, 8)
