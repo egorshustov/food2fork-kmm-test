@@ -1,8 +1,8 @@
 package com.egorshustov.food2forkkmm.presentation.model
 
-sealed interface UIComponentType {
+sealed class UIComponentType {
 
-    object Dialog : UIComponentType
+    object Dialog : UIComponentType()
 
-    object None : UIComponentType
+    object None : UIComponentType()
 }
