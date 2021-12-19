@@ -17,6 +17,8 @@ class RecipeListViewModel: ObservableObject {
     
     @Published var state: RecipeListState = RecipeListState()
     
+    @Published var showDialog: Bool = false
+    
     init(
         searchRecipesUseCase: SearchRecipesUseCase,
         foodCategoryUtil: FoodCategoryUtil
@@ -39,9 +41,14 @@ class RecipeListViewModel: ObservableObject {
             case is RecipeListEvent.OnSelectCategory:
                 onUpdateSelectedCategory(foodCategory: (event as! RecipeListEvent.OnSelectCategory).category)
             case is RecipeListEvent.OnRemoveHeadMessageFromQueue:
-                doNothing()
+                removeHeadMessageFromQueue()
             default:
-                doNothing()
+                self.appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder()
+                    .id(id: UUID().uuidString)
+                    .title(title: "Error")
+                    .uiComponentType(uiComponentType: UIComponentType.Dialog())
+                    .description(description: "Unknown Event")
+                    .positive(positiveAction: PositiveAction(positiveBtnTxt: "OK", onPositiveAction: {})))
         }
     }
     
@@ -66,6 +73,12 @@ class RecipeListViewModel: ObservableObject {
                         let resultError = result as! Result.Error
                         let exception = resultError.exception
                         print(exception)
+                        self.appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder()
+                            .id(id: "SearchRecipes.Error")
+                            .title(title: "Error")
+                            .uiComponentType(uiComponentType: UIComponentType.Dialog())
+                            .description(description: exception.message ?? "Unknown Error")
+                            .positive(positiveAction: PositiveAction(positiveBtnTxt: "OK", onPositiveAction: {})))
                         self.updateState(isLoading: false)
                     }
                     case is Result.Loading: do {
@@ -182,6 +195,36 @@ class RecipeListViewModel: ObservableObject {
             selectedCategory: currentState.selectedCategory,
             recipes: currentState.recipes,
             bottomRecipe: bottomRecipe ?? currentState.bottomRecipe,
-            queue: queue ?? currentState.queue)
+            queue: queue ?? currentState.queue
+        )
+        shouldShowDialog()
+    }
+    
+    private func shouldShowDialog() {
+        let currentState = self.state.copy() as! RecipeListState
+        showDialog = currentState.queue.items.count > 0
+    }
+    
+    private func appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {
+        let currentState = self.state.copy() as! RecipeListState
+        let queue = currentState.queue
+        let queueUtil = GenericMessageInfoQueueUtil()
+        let messageInfo = messageInfoBuilder.build()
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: messageInfo) {
+            queue.add(element: messageInfo)
+            updateState(queue: queue)
+        }
+    }
+    
+    private func removeHeadMessageFromQueue() {
+        let currentState = self.state.copy() as! RecipeListState
+        let queue = currentState.queue
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }
+        catch {
+            print("\(error)")
+        }
     }
 }

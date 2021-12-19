@@ -73,6 +73,14 @@ struct RecipeListScreen: View {
                 }
                 .navigationBarTitle("Return to main screen")
                 .navigationBarHidden(true)
+                .alert(isPresented: $viewModel.showDialog, content: {
+                    let first = viewModel.state.queue.peek()!
+                    return GenericMessageInfoAlert().build(
+                        message: first,
+                        onRemoveHeadMessage: {
+                            viewModel.onTriggerEvent(event: RecipeListEvent.OnRemoveHeadMessageFromQueue())
+                        })
+                })
                 
                 if viewModel.state.isLoading {
                     ProgressView("Searching recipes...")

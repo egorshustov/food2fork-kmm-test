@@ -17,7 +17,7 @@ struct GenericMessageInfoAlert {
     ) -> Alert {
         return Alert(
             title: Text(message.title),
-            message: Text(message.description ?? "Something went wrong"),
+            message: Text(message.description_ ?? "Something went wrong"),
             primaryButton: .default(
                 Text(message.positiveAction?.positiveBtnTxt ?? "OK"),
                 action: {
