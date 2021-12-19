@@ -12,28 +12,31 @@ import shared
 struct GenericMessageInfoAlert {
     
     func build(
-        message: GenericMessageInfo,
-        onRemoveHeadMessage: @escaping () -> Void
+        title: String,
+        onRemoveHeadMessageFromQueue: @escaping () -> Void,
+        description: String? = nil,
+        positiveAction: PositiveAction? = nil,
+        negativeAction: NegativeAction? = nil
     ) -> Alert {
         return Alert(
-            title: Text(message.title),
-            message: Text(message.description_ ?? "Something went wrong"),
+            title: Text(title),
+            message: Text(description ?? "Something went wrong"),
             primaryButton: .default(
-                Text(message.positiveAction?.positiveBtnTxt ?? "OK"),
+                Text(positiveAction?.positiveBtnTxt ?? "OK"),
                 action: {
-                    if (message.positiveAction != nil) {
-                        message.positiveAction!.onPositiveAction()
+                    if (positiveAction != nil) {
+                        positiveAction!.onPositiveAction()
                     }
-                    onRemoveHeadMessage()
+                    onRemoveHeadMessageFromQueue()
                 }
             ),
             secondaryButton: .default(
-                Text(message.negativeAction?.negativeBtnTxt ?? "Cancel"),
+                Text(negativeAction?.negativeBtnTxt ?? "Cancel"),
                 action: {
-                    if (message.negativeAction != nil) {
-                        message.negativeAction!.onNegativeAction()
+                    if (negativeAction != nil) {
+                        negativeAction!.onNegativeAction()
                     }
-                    onRemoveHeadMessage()
+                    onRemoveHeadMessageFromQueue()
                 }
             )
         )

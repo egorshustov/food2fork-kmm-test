@@ -31,9 +31,14 @@ class RecipeDetailViewModel: ObservableObject {
             case is RecipeDetailEvent.GetRecipe:
                 getRecipe(recipeId: Int((event as! RecipeDetailEvent.GetRecipe).recipeId))
             case is RecipeDetailEvent.OnRemoveHeadMessageFromQueue:
-                doNothing()
+                removeHeadMessageFromQueue()
             default:
-                doNothing()
+                self.appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder()
+                    .id(id: UUID().uuidString)
+                    .title(title: "Error")
+                    .uiComponentType(uiComponentType: UIComponentType.Dialog())
+                    .description(description: "Unknown Event")
+                    .positive(positiveAction: PositiveAction(positiveBtnTxt: "OK", onPositiveAction: {})))
         }
     }
     
@@ -53,6 +58,12 @@ class RecipeDetailViewModel: ObservableObject {
                             let resultError = result as! Result.Error
                             let exception = resultError.exception
                             print(exception)
+                            self.appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder()
+                                .id(id: "GetRecipe.Error")
+                                .title(title: "Error")
+                                .uiComponentType(uiComponentType: UIComponentType.Dialog())
+                                .description(description: exception.message ?? "Unknown Error")
+                                .positive(positiveAction: PositiveAction(positiveBtnTxt: "OK", onPositiveAction: {})))
                             self.updateState(isLoading: false)
                         }
                         case is Result.Loading: do {
@@ -71,14 +82,36 @@ class RecipeDetailViewModel: ObservableObject {
             isLoading: Bool? = nil,
             recipe: Recipe? = nil,
             queue: Queue<GenericMessageInfo>? = nil
-        ){
-            let currentState = (self.state.copy() as! RecipeDetailState)
-            self.state = self.state.doCopy(
-                isLoading: isLoading ?? currentState.isLoading,
-                recipe: recipe ?? currentState.recipe,
-                queue: queue ?? currentState.queue
-            )
-        }
+    ){
+        let currentState = (self.state.copy() as! RecipeDetailState)
+        self.state = self.state.doCopy(
+            isLoading: isLoading ?? currentState.isLoading,
+            recipe: recipe ?? currentState.recipe,
+            queue: queue ?? currentState.queue
+        )
+    }
     
-    private func doNothing() {}
+    private func appendToMessageQueue(messageInfoBuilder: GenericMessageInfo.Builder) {
+        let currentState = self.state.copy() as! RecipeDetailState
+        let queue = currentState.queue
+        let queueUtil = GenericMessageInfoQueueUtil()
+        let messageInfo = messageInfoBuilder.build()
+        if !queueUtil.doesMessageAlreadyExistInQueue(queue: queue, messageInfo: messageInfo) {
+            queue.add(element: messageInfo)
+            updateState(queue: queue)
+        }
+    }
+    
+    private func removeHeadMessageFromQueue() {
+        let currentState = self.state.copy() as! RecipeDetailState
+        let queue = currentState.queue
+        do {
+            try queue.remove()
+            updateState(queue: queue)
+        }
+        catch {
+            print("\(error)")
+        }
+    }
+    
 }

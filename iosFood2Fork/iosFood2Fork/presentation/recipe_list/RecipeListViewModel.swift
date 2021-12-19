@@ -135,10 +135,6 @@ class RecipeListViewModel: ObservableObject {
         onUpdateQuery(query: foodCategory?.value ?? "")
         onTriggerEvent(event: RecipeListEvent.NewSearch())
     }
-        
-    private func doNothing() {
-        // does nothing
-    }
     
     private func appendRecipes(recipes: [Recipe]) {
         var currentState = self.state.copy() as! RecipeListState

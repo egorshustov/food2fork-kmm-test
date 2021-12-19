@@ -19,6 +19,7 @@ class GetRecipeUseCase(
         emit(Result.Loading)
 
         try {
+            if (id == 1 || id == 5) throw Exception("Invalid RecipeId: $id") // this is for errors handling testing
             val cachedRecipe: Recipe? = recipeCache.get(id)
             if (cachedRecipe == null) {
                 val fetchedRecipe: Recipe = recipeService.get(id)
