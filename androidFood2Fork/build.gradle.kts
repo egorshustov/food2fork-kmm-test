@@ -51,7 +51,8 @@ dependencies {
     implementation(Compose.compiler)
     implementation(Compose.constraintLayout)
     implementation(Compose.activity)
-    implementation(Compose.navigation)
+    implementation(Compose.navigationCompose)
+    implementation(Compose.navigationCommon)
 
     implementation(Google.material)
 
