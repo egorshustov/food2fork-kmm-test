@@ -8,7 +8,7 @@ plugins {
     id(Plugins.sqlDelight)
 }
 
-version = "1.0"
+version = "1.0" // Cocoapods Integration requires version of this project to be specified
 
 android {
     compileSdk = Application.compileSdk
@@ -20,14 +20,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
     }
 }
 

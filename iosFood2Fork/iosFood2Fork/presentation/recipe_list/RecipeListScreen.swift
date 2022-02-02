@@ -33,6 +33,14 @@ struct RecipeListScreen: View {
             searchRecipesUseCase: searchRecipesUseCaseModule.searchRecipesUseCase, foodCategoryUtil: foodCategoryUtil
         )
         self.foodCategories = foodCategoryUtil.getAllFoodCategories()
+        
+        suspendFunctionToCompletionHandlerExample()
+    }
+    
+    func suspendFunctionToCompletionHandlerExample() {
+        self.networkModule.recipeService.get(id: 1, completionHandler: { recipe, error in
+            print(recipe ?? error ?? "")
+        })
     }
     
     var body: some View {
