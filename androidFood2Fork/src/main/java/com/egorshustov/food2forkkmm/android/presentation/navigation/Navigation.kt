@@ -1,10 +1,7 @@
 package com.egorshustov.food2forkkmm.android.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.HiltViewModelFactory
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,9 +19,8 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(
             route = Screen.RecipeList.route
-        ) { navBackStackEntry ->
-            val factory: ViewModelProvider.Factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-            val viewModel: RecipeListViewModel = viewModel(factory = factory)
+        ) {
+            val viewModel = hiltViewModel<RecipeListViewModel>()
             RecipeListScreen(
                 state = viewModel.state.value,
                 onTriggerEvent = viewModel::onTriggerEvent,
@@ -38,9 +34,8 @@ fun Navigation() {
             arguments = listOf(navArgument(RECIPE_ID_ARG) {
                 type = NavType.IntType
             })
-        ) { navBackStackEntry ->
-            val factory: ViewModelProvider.Factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-            val viewModel: RecipeDetailViewModel = viewModel(factory = factory)
+        ) {
+            val viewModel = hiltViewModel<RecipeDetailViewModel>()
             RecipeDetailScreen(
                 state = viewModel.state.value,
                 onTriggerEvent = viewModel::onTriggerEvent
