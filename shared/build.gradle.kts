@@ -49,7 +49,8 @@ kotlin {
             dependencies {
                 implementation(Kotlinx.datetime)
                 implementation(Ktor.core)
-                implementation(Ktor.clientSerialization)
+                implementation(Ktor.contentNegotiation)
+                implementation(Ktor.jsonSerialization)
                 implementation(SQLDelight.runtime)
             }
         }
@@ -61,7 +62,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation(Ktor.ios)
+                implementation(Ktor.darwin)
                 implementation(SQLDelight.nativeDriver)
             }
         }
