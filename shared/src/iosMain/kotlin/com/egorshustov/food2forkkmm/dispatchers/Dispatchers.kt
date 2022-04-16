@@ -18,7 +18,9 @@ actual val uiDispatcher: CoroutineContext
 @ThreadLocal
 private object MainDispatcher : CoroutineDispatcher() {
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun dispatch(context: CoroutineContext, block: Runnable) {
+        val isExperimentalMM = kotlin.native.isExperimentalMM()
         dispatch_async(dispatch_get_main_queue()) {
             try {
                 block.run().freeze()
@@ -33,7 +35,9 @@ private object MainDispatcher : CoroutineDispatcher() {
 @ThreadLocal
 private object IODispatcher : CoroutineDispatcher() {
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun dispatch(context: CoroutineContext, block: Runnable) {
+        val isExperimentalMM = isExperimentalMM()
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT.toLong(), 0.toULong())) {
             try {
                 block.run().freeze()
