@@ -67,6 +67,12 @@ kotlin {
             }
         }
     }
+
+    kotlin.targets.withType(KotlinNativeTarget::class) {
+        binaries.all {
+            freeCompilerArgs = freeCompilerArgs + "-Xruntime-logs=gc=info"
+        }
+    }
 }
 
 sqldelight {
