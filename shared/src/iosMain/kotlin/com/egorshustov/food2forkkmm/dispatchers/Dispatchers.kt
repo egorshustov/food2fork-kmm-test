@@ -20,7 +20,7 @@ private object MainDispatcher : CoroutineDispatcher() {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        val isExperimentalMM = kotlin.native.isExperimentalMM()
+        val isExperimentalMM = isExperimentalMM()
         dispatch_async(dispatch_get_main_queue()) {
             try {
                 block.run().freeze()

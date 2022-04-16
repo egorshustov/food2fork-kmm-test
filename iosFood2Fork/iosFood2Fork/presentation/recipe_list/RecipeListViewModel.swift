@@ -62,8 +62,7 @@ class RecipeListViewModel: ObservableObject {
             callback: { result in
                 switch result {
                     case is ResultSuccess<AnyObject>: do {
-                        let a = Thread.current
-                        let b = Thread.isMainThread
+                        self.checkThread()
                         let resultSuccess = result as! ResultSuccess<AnyObject>
                         let recipeList = resultSuccess.data as! [Recipe]
                         if !recipeList.isEmpty {
@@ -93,6 +92,13 @@ class RecipeListViewModel: ObservableObject {
                 }
             }
         )
+    }
+    
+    private func checkThread() {
+        let currentThread = Thread.current
+        print("currentThread: \(currentThread)")
+        let isMainThread = Thread.isMainThread
+        print("isMainThread: \(isMainThread)")
     }
     
     private func nextPage() {
